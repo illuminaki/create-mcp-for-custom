@@ -1,0 +1,11 @@
+{
+    "mcpServers": {
+        "yty-rails": {
+            "command": "node",
+            "args": ["./mcp-server/index.js"],
+            "env": {
+                "RAILS_API_URL": "http://localhost:3000"
+            }
+        }
+    }
+}

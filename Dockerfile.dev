@@ -1,0 +1,21 @@
+# Dockerfile.dev para Rails 8
+FROM ruby:3.2.3-slim
+
+WORKDIR /rails
+
+# Dependencias necesarias para desarrollo (sqlite3, build-essential para gemas)
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y curl build-essential libyaml-dev pkg-config sqlite3 && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# Instalar Rails y Bundler
+COPY Gemfile Gemfile.lock ./
+RUN bundle install
+
+COPY . .
+
+# Puerto por defecto de Rails
+EXPOSE 3000
+
+# Script para limpiar pids y arrancar el server
+CMD ["bash", "-c", "rm -f tmp/pids/server.pid && bundle exec rails s -b 0.0.0.0"]

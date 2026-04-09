@@ -1,0 +1,225 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+components:
+  schemas:
+    book:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        desc:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - title
+      - desc
+    user:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        score:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - name
+      - score
+paths:
+  "/books":
+    get:
+      summary: Retrieves all books
+      tags:
+      - Books
+      responses:
+        '200':
+          description: books found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/book"
+    post:
+      summary: Creates a book
+      tags:
+      - Books
+      parameters: []
+      responses:
+        '201':
+          description: book created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                book:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    desc:
+                      type: string
+                  required:
+                  - title
+                  - desc
+  "/books/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Retrieves a book
+      tags:
+      - Books
+      responses:
+        '200':
+          description: book found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/book"
+        '404':
+          description: book not found
+    patch:
+      summary: Updates a book
+      tags:
+      - Books
+      parameters: []
+      responses:
+        '200':
+          description: book updated
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                book:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    desc:
+                      type: string
+    delete:
+      summary: Deletes a book
+      tags:
+      - Books
+      responses:
+        '204':
+          description: book deleted
+  "/users":
+    get:
+      summary: Retrieves all users
+      tags:
+      - Users
+      responses:
+        '200':
+          description: users found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/user"
+    post:
+      summary: Creates a user
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '201':
+          description: user created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    score:
+                      type: integer
+                  required:
+                  - name
+                  - score
+  "/users/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Retrieves a user
+      tags:
+      - Users
+      responses:
+        '200':
+          description: user found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/user"
+        '404':
+          description: user not found
+    patch:
+      summary: Updates a user
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '200':
+          description: user updated
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    score:
+                      type: integer
+    delete:
+      summary: Deletes a user
+      tags:
+      - Users
+      responses:
+        '204':
+          description: user deleted
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000

@@ -1,0 +1,30 @@
+services:
+  rails:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/rails
+    environment:
+      - RAILS_ENV=development
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:3000/up" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mcp:
+    build:
+      context: ./mcp-server
+    environment:
+      - RAILS_API_URL=http://rails:3000
+    depends_on:
+      rails:
+        condition: service_healthy
+    # El MCP server por si solo en Docker solo sirve si corre como comando stdio
+    # Para el video, lo mejor es mostrar que puede correr aqui o local.
+    # Como servicio solito en docker no hace mucho sin un cliente MCP conectado.
+    tty: true
+    stdin_open: true
