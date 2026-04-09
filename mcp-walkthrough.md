@@ -40,18 +40,26 @@ graph TD
     MCPServer -- "HTTP (axios)" --> RailsAPI
     RailsAPI -- "ActiveRecord" --> DB
 
-    style MCPServer fill:#f9f,stroke:#333,stroke-width:2px
-    style RailsAPI fill:#ccf,stroke:#333,stroke-width:2px
+    style MCPServer fill:#fbbf24,stroke:#d97706,stroke-width:2px,color:#000
+    style RailsAPI fill:#34d399,stroke:#059669,stroke-width:2px,color:#000
 ```
 
 El MCP server actúa como adaptador: traduce las llamadas del modelo a requests HTTP contra tu API Rails existente. Rails no sabe nada de MCP; el backend no cambia.
 
-server.tool(
-    nombre,           // 1. Nombre de la herramienta
-    descripción,      // 2. Descripción para que el LLM entienda qué hace
-    schema,           // 3. Esquema de parámetros (con Zod)
-    handler           // 4. Función async que se ejecuta realmente
-);
+### Estructura de una Herramienta (Tool)
+
+Cada herramienta en el servidor MCP sigue este patrón convencional que permite al LLM entender sus capacidades:
+
+```javascript
+server.tool(nombre, descripción, schema, handler);
+```
+
+| Componente | Propósito |
+| :--- | :--- |
+| **Nombre** | Identificador único de la herramienta (ej. `create_user`). |
+| **Descripción** | Texto crucial que el LLM lee para decidir cuándo y cómo usar la herramienta. |
+| **Schema** | Definición de parámetros (usando `zod`) para validación y tipado. |
+| **Handler** | Función `async` que ejecuta la lógica real (ej. llamar a la API de Rails). |
 
 ---
 
