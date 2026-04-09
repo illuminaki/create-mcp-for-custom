@@ -1,6 +1,6 @@
-# YTY Rails + MCP Server
+# MCP Server
 
-## ¿Por qué conectar un backend Rails a herramientas de IA via MCP?
+## ¿Por qué conectar un backend a herramientas de IA via MCP?
 
 Hoy los editores e IDEs con IA (Claude Code, Windsurf, Cursor) y los agentes autónomos (Antigravity) pueden ejecutar **herramientas** además de solo generar texto. El Model Context Protocol (MCP) es el estándar abierto que define cómo un modelo de IA descubre y llama esas herramientas.
 
@@ -11,6 +11,15 @@ La idea es simple: en lugar de que el desarrollador explique manualmente cómo f
 - **Como base para automatización**: este mismo patrón escala a workflows más complejos (pipelines de datos, testing automatizado, administración de contenido).
 
 Lo que este repo demuestra: **un CRUD Rails estándar (Users y Books) expuesto como herramientas MCP**, consumible por cualquier herramienta compatible sin modificar una sola línea del backend.
+
+### Casos de uso reales (Beyond Hello World)
+
+Empresas y desarrolladores están usando servidores MCP personalizados para:
+
+- **Soporte Técnico**: Permitir que un agente de IA consulte el estado de una orden o reinicie una contraseña de usuario conectando con APIs internas.
+- **Gestión de Infraestructura**: Herramientas para listar pods de Kubernetes, ver logs en tiempo real o disparar despliegues desde el chat.
+- **Auditoría y Compliance**: El agente puede analizar bases de datos de configuración para asegurar que los recursos cumplen con las políticas de la empresa.
+- **Knowledge Bases Dinámicas**: Conectar documentación técnica viva con el modelo para que las respuestas siempre estén sincronizadas con el código.
 
 ---
 
