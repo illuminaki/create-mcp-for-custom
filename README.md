@@ -8,7 +8,14 @@ CRUD de usuarios y libros construido con Rails 8, usado como ejemplo de integrac
 - Rails 8.0.5
 - SQLite (desarrollo)
 
-## Setup
+## Setup (Recomendado con Docker)
+
+```bash
+docker compose build
+docker compose up
+```
+
+### Setup Local (Sin Docker)
 
 ```bash
 bundle install
