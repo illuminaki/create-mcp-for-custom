@@ -12,7 +12,7 @@ La idea es simple: en lugar de que el desarrollador explique manualmente cómo f
 
 Lo que este repo demuestra: **un CRUD Rails estándar (Users y Books) expuesto como herramientas MCP**, consumible por cualquier herramienta compatible sin modificar una sola línea del backend.
 
-### Casos de uso reales (Beyond Hello World)
+### Casos de uso
 
 Empresas y desarrolladores están usando servidores MCP personalizados para:
 
@@ -54,6 +54,15 @@ graph TD
 ```
 
 El MCP server actúa como adaptador: traduce las llamadas del modelo a requests HTTP contra tu API Rails existente. Rails no sabe nada de MCP; el backend no cambia.
+
+#### Cómo funciona el transporte (stdio)
+
+Para este proyecto utilizamos `StdioServerTransport`, que es el estándar para servidores MCP locales:
+
+1. **Subproceso**: El cliente MCP (Claude Code, Windsurf, etc.) lanza tu servidor Node.js como un subproceso dependiente.
+2. **Canales**: La comunicación se realiza mediante `stdin` (cliente → servidor) y `stdout` (servidor → cliente).
+3. **Protocolo**: Los mensajes viajan en formato **JSON-RPC 2.0**, delimitados por saltos de línea (`\n`).
+4. **Logs**: El canal `stderr` queda reservado exclusivamente para logs y debugging, evitando interferir con el protocolo.
 
 ### Estructura de una Herramienta (Tool)
 
